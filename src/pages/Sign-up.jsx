@@ -88,7 +88,7 @@ function SignUp() {
               type="text"
               placeholder="Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} // Fixed here
+              onChange={(e) => setEmail(e.target.value)} 
               className="p-3 w-[70%] bg-white text-black border border-gray-300"
             />
 

@@ -3,15 +3,15 @@ import useStore from "../components/useStore";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const { username, password, setUsername, setPassword } = useStore();
+  const { email, password, setEmail, setPassword } = useStore();
   const navigate = useNavigate();
-
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    const credentials = { email: username, password };
+    const credentials = { email: email, password };
   
     try {
-      console.log("Attempting to log in with:", { username });
+      console.log("Attempting to log in with:", { email });
   
       const response = await fetch("https://students-hackaton.vercel.app/user/sign-in", {
         method: "POST",
@@ -69,8 +69,8 @@ function Login() {
             <input
               type="text"
               placeholder="Email"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="p-3 w-[70%] bg-white text-black border border-gray-300"
             />
 
@@ -100,3 +100,6 @@ function Login() {
 }
 
 export default Login;
+
+
+
