@@ -1,25 +1,59 @@
-// Store.js
-import create from 'zustand';
-const useStore = create((set) => ({
-  isAuthenticated: false, 
+import { create } from 'zustand';
+import axios from 'axios';
+export const useAuthStore = create((set) => ({
+  isAuthenticated: false,
   login: () => set({ isAuthenticated: true }),
   logout: () => set({ isAuthenticated: false }),
 }));
-export default useStore;
 
+// blogStore.js (for blog fetching)
 
-const fetchBlog = create((set) => ({
-    apiUrl: import.meta.env.VITE_API_URL, // Access the environment variable for the API URL
-    blogs: [], // Initial state for blogs
+  export const useBlogStore = create((set) => ({
+    apiUrl: import.meta.env.VITE_API_URL,  
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDM1NThjODYzMGY4ZTRjNmNhNDNmZCIsImVtYWlsIjoic2FvbGFpaGVhbmdAZ21haWwuY29tIiwiaWF0IjoxNzI4MzQ3NjQyLCJleHAiOjE3MzA5Mzk2NDJ9.Je4cTv-te59S_pBLL8eQgE8YwVhSMFsrQHs4QA-yPxk',  
+    blogs:[],
+    loading: false,
+    error: null,
+  
     fetchBlogs: async () => {
+      set({ loading: true, error: null }); // Set loading state before fetch
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/get-all-blog`); // Use env variable for API URL
-        const data = await response.json(); // Parse JSON response
-        set({ blogs: data.blogs }); // Update state with fetched blogs
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/get-all-blog`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${useBlogStore.getState().token}`, 
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        console.log('Fetched blogs:', data); 
+        if (Array.isArray(data)) {
+          set({ blogs: data, loading: false }); 
+        } else {
+          console.error('Invalid data structure:', data);
+          set({ error: 'Invalid data structure', loading: false }); 
+        }
       } catch (error) {
-        console.error('Error fetching blogs:', error); // Log any errors
+        console.error('Error fetching blogs:', error);  
+        set({ error: error.message, loading: false }); 
       }
-    }
+    },
+
+
+    deleteBlog: async (blogId, token) => {
+      try {
+          await axios.delete(`${import.meta.env.VITE_API_URL}/delete-blog/${blogId}`, {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+              },
+          });
+          set((state) => ({
+              blogs: state.blogs.filter((blog) => blog._id !== blogId),
+          }));
+          console.log('Blog deleted successfully');
+      } catch (error) {
+          console.error('Error deleting blog:', error);
+      }
+  },
   }));
   
-  export default fetchBlog; 
