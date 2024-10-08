@@ -2,10 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css'
 import Login from './pages/Login';
-import SignUp from './pages/Sign-up';
+
+import SignUp from './pages/Register';
 import NotFound from './components/Notfound';
 import PrivateRoute from './components/PrivateRoute';
 import Blogmodule from './pages/Blogmodule';
+
 function App() {
   return (
 
