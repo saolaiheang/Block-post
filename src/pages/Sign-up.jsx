@@ -3,21 +3,26 @@ import { Link } from "react-router-dom";
 
 function SignUp() {
   const {
-    setUsername,
+    setEmail,
     setPassword,
     setFirstName,
     setLastName,
-    username,
+    email,
     password,
     firstName,
     lastName,
   } = useStore();
 
   const handleSignUp = async () => {
-    const userDetails = { firstName, lastName, username, password };
+    if (!firstName || !lastName || !email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    const userDetails = { firstName, lastName, email, password };
 
     try {
-      const response = await fetch("https://your-api-endpoint.com/signup", {
+      const response = await fetch("https://students-hackaton.vercel.app/user/sign-up", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,9 +35,10 @@ function SignUp() {
       if (response.ok) {
         alert("Sign up successful!");
         console.log("Sign Up successful", data);
+        localStorage.setItem("token", data.token);
       } else {
         alert("Sign up failed: " + data.message);
-        console.error("Sign up failed", data.message);
+        console.error("Sign up failed", data);
       }
     } catch (error) {
       alert("An error occurred: " + error.message);
@@ -53,7 +59,6 @@ function SignUp() {
           <Link to="/" className="bg-blue-700 text-white h-[5vh] items-center flex justify-center w-[20%]">
             Go to Log in
           </Link>
-          
         </div>
 
         <div className="w-full h-full flex items-center justify-center">
@@ -82,8 +87,8 @@ function SignUp() {
             <input
               type="text"
               placeholder="Email"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} // Fixed here
               className="p-3 w-[70%] bg-white text-black border border-gray-300"
             />
 
@@ -97,7 +102,7 @@ function SignUp() {
             />
 
             <button
-              onClick={handleSignUp} // Fixed to call handleSignUp directly
+              onClick={handleSignUp}
               className="mt-10 bg-blue-700 text-white p-3 w-[70%]"
             >
               Sign Up

@@ -5,7 +5,7 @@ const useStore = create((set) => ({
   password: '',
   firstName: '',
   lastName: '',
-  setUsername: (username) => set({ username }),
+  setEmail: (email) => set({ email }),
   setPassword: (password) => set({ password }),
   setFirstName: (firstName) => set({ firstName }),
   setLastName: (lastName) => set({ lastName }),

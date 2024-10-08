@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Login() {
   const { username, password, setUsername, setPassword } = useStore();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+
 
   const handleLogin = async () => {
     const credentials = { email: username, password };
@@ -100,60 +100,3 @@ function Login() {
 }
 
 export default Login;
-
-
-
-
-
-// // import React from 'react';
-// // import useStore from "../components/useStore";
-// // import { Link, useNavigate } from "react-router-dom";
-
-// // function Login() {
-// //   const {
-// //     username,
-// //     password,
-// //     setUsername, 
-// //     setPassword,  
-// //   } = useStore();
-  
-// //   const navigate = useNavigate(); 
-
-// //   const handleLogin = async () => {
-// //     const credentials = { username, password };
-
-// //     try {
-// //       const response = await fetch("https://your-api-endpoint.com/login", {
-// //         method: "POST",
-// //         headers: {
-// //           "Content-Type": "application/json",
-// //         },
-// //         body: JSON.stringify(credentials),
-// //       });
-
-// //       const data = await response.json();
-
-// //       if (response.ok) {
-// //         alert("Login successful!");
-// //         console.log("Login successful", data);
-// //         localStorage.setItem("token", data.token); 
-
-// //         if (data.value === true) {
-// //           navigate("/signup");
-// //         } else {
-// //           navigate("/dashboard"); // Assuming you have a dashboard route
-// //         }
-// //       } else {
-// //         alert("Login failed: " + data.message);
-// //         console.error("Login failed", data.message);
-// //       }
-// //     } catch (error) {
-// //       alert("An error occurred: " + error.message);
-// //       console.error("An error occurred:", error);
-// //     }
-// //   };
-
-
-// // }
-
-// // export default Login;
