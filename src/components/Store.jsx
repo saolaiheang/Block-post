@@ -2,8 +2,9 @@ import { create } from 'zustand';
 import axios from 'axios';
 export const useAuthStore = create((set) => ({
   isAuthenticated: false,
-  login: () => set({ isAuthenticated: true }),
-  logout: () => set({ isAuthenticated: false }),
+  token: null,
+  setToken: (token) => set({ isAuthenticated: !!token, token }),
+  logout: () => set({ isAuthenticated: false, token: null })
 }));
 
 // blogStore.js (for blog fetching)

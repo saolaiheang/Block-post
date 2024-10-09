@@ -16,12 +16,10 @@ function App() {
       <Routes>
 
     <Route path="/" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/blogmodule"
-          element={
+        <Route path="/blogmodule" element={
             <PrivateRoute>
               <Blogmodule />
             </PrivateRoute>
