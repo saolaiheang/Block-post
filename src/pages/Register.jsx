@@ -13,7 +13,7 @@ function SignUp() {
     firstName,
     lastName,
   } = useStore();
-  const navigate = useNavigate();  // Hook to navigate programmatically
+  const navigate = useNavigate();
 
   const handleSignUp = async () => {
     if (!firstName || !lastName || !email || !password) {
@@ -40,7 +40,6 @@ function SignUp() {
         localStorage.setItem("token", data.token);
         localStorage.setItem("email", email);  
 
-        // Redirect to profile page after sign-up
         navigate("/user");
       } else {
         alert("Sign up failed: " + data.message);
