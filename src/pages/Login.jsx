@@ -36,6 +36,8 @@ function Login() {
 
       if (data.isNewAccount) {
         navigate("/signup");
+      }else {
+        navigate("/Blogmodule"); 
       }
       
   

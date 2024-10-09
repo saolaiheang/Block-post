@@ -36,6 +36,7 @@ function SignUp() {
         alert("Sign up successful!");
         console.log("Sign Up successful", data);
         localStorage.setItem("token", data.token);
+        navigate("/Blogmodule");
       } else {
         alert("Sign up failed: " + data.message);
         console.error("Sign up failed", data);
