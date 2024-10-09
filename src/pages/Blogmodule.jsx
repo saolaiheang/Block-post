@@ -23,9 +23,10 @@ function Blogmodule() {
     };
 
 
+
     return (
         <>
-            <div className="  bg-slate-300 overflow-hidden">
+            <div className="bg-slate-300 overflow-hidden">
                 <div className="sliderimage">
                     <div className='mt-10'>
                         <Swiper
@@ -34,6 +35,7 @@ function Blogmodule() {
                             slidesPerView={1}
                             navigation
                             pagination={{ clickable: true }}
+                            
                         >
                             {blogs.map((blog) => (
                                 <SwiperSlide key={blog._id}>
@@ -47,7 +49,7 @@ function Blogmodule() {
 
                 <div className='w-[100%]  mt-[50px] '>
                     {blogs && blogs.length > 0 ? (
-                        <div className="w-full flex flex-wrap lg:flex-row md:flex-col max-sm:flex-col">
+                        <div className="w-full flex flex-wrap lg:flex-row md:flex-col max-sm:flex-col lg:justify-center md:justify-center max-sm:justify-center ">
                             {blogs.slice(0, 10).map((blog) => (
                                 <BlogCard
                                     key={blog._id}
@@ -56,7 +58,7 @@ function Blogmodule() {
                                     date={new Date(blog.createdAt).toLocaleDateString()}
                                     desc={blog.desc}
                                     image={blog.thumbnail}
-                                    onDelete={() => handleDelete(blog._id)} 
+                                    onDelete={() => handleDelete(blog._id)}
                                 />
                             ))}
                         </div>

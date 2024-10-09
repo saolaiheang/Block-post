@@ -25,10 +25,10 @@ const BlogCard = ({ title, author, date, desc, image, onView, onEdit, onDelete }
   return (
     <>
     
-    <div className="w-[25%] max-sm:w-[85%] m-10 h-auto bg-slate-100   rounded-lg overflow-hidden">
+    <div className="w-[25%] max-sm:w-[85%] mx-8 my-5 h-auto bg-slate-100   rounded-lg overflow-hidden  transition-transform duration-500 hover:scale-105">
       {image ? (
       
-        <div className="relative h-[50%] w-full">
+        <div className="relative h-[55%] w-full">
           
           <img src={image} alt={title} className="h-[100%] w-full object-cover " />
           <button onClick={toggleMenu} className="absolute top-2 right-2 bg-white p-1 rounded-full shadow">
@@ -47,13 +47,14 @@ const BlogCard = ({ title, author, date, desc, image, onView, onEdit, onDelete }
       ) : (
         <div className="placeholder-image">No Image Available</div>
       )}
-      <div className="mt-5 space-y-5">
+      <div className="mt-5 space-y-2">
         <h3 className='text-[28px] text-center font-bold text-amber-600'>{title}</h3>
-        <p className='text-[18px] p-2'>{truncateDesc(desc, 120)} </p>
-        <span className='flex justify-between p-2'>
+        <span className='flex justify-between text-black font-bold p-2 uppercase'>
           <p>By {author}</p>
           <p>{date}</p>
         </span>
+        <p className='text-[18px] p-2'>{truncateDesc(desc, 120)} </p>
+        
         <Link to="" className='text-blue-600 p-2'>Read More</Link>
         
         
