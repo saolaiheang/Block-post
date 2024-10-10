@@ -28,7 +28,7 @@ function App() {
           }
           
         />
-                      <Route path="/blog/:id" element={<BlogDetail />} /> 
+         <Route path="/blog/:id" element={<BlogDetail />} /> 
 
         <Route path="*" element={<NotFound />} />
       </Routes>

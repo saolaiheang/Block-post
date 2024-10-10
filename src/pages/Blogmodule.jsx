@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import BlogCard from '../components/Blogcards';
 import { useBlogStore } from '../components/Store';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -10,6 +10,7 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import Createformnew from '../components/Createformnew';
 import Updateblog from '../components/Updateblog';
+import { useNavigate } from 'react-router-dom';
 
 function Blogmodule() {
     const { blogs, fetchBlogs, deleteBlog, createBlog, updateBlog, fetchBlogById} = useBlogStore();
@@ -19,7 +20,7 @@ function Blogmodule() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false); 
     const [currentBlog, setCurrentBlog] = useState(null);
-    const [selectedBlog, setSelectedBlog] = useState(null); // For viewing blog details
+    const navigate = useNavigate(); 
 
 
     useEffect(() => {
@@ -64,9 +65,9 @@ function Blogmodule() {
         setIsEditModalOpen(true);
     };
     const onView = (blog) => {
-        setSelectedBlog(blog); // Set the selected blog
-        
+        navigate(`/blog/${blog._id}`);
     };
+    
     return (
         <>
             <div className="bg-slate-300 overflow-hidden">
