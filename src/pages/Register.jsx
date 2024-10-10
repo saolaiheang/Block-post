@@ -1,8 +1,8 @@
-import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useStore from "../components/useStore";
 
 function SignUp() {
+  const navigate = useNavigate(); 
   const {
     setEmail,
     setPassword,
@@ -13,7 +13,6 @@ function SignUp() {
     firstName,
     lastName,
   } = useStore();
-  const navigate = useNavigate();
 
   const handleSignUp = async () => {
     if (!firstName || !lastName || !email || !password) {
@@ -38,9 +37,11 @@ function SignUp() {
         alert("Sign up successful!");
         console.log("Sign Up successful", data);
         localStorage.setItem("token", data.token);
-        localStorage.setItem("email", email);  
-
-        navigate("/user");
+        localStorage.setItem("lastName", lastName);
+        localStorage.setItem("firstame", firstName);
+        localStorage.setItem("email", email);
+ 
+        navigate("/blogmodule");
       } else {
         alert("Sign up failed: " + data.message);
         console.error("Sign up failed", data);
@@ -50,6 +51,7 @@ function SignUp() {
       console.error("An error occurred:", error);
     }
   };
+
 
   return (
     <div className="bg-purple-300 h-[100vh]">
