@@ -6,6 +6,7 @@ import PrivateRoute from './components/PrivateRoute';
 import './index.css'
 import Login from './pages/Login';
 import SignUp from './pages/Register';
+import BlogDetail from './pages/Detailpage';
 
 
 
@@ -23,8 +24,12 @@ function App() {
             <PrivateRoute>
               <Blogmodule />
             </PrivateRoute>
+            
           }
+          
         />
+                      <Route path="/blog/:id" element={<BlogDetail />} /> 
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

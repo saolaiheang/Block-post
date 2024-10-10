@@ -12,13 +12,14 @@ import Createformnew from '../components/Createformnew';
 import Updateblog from '../components/Updateblog';
 
 function Blogmodule() {
-    const { blogs, fetchBlogs, deleteBlog, createBlog, updateBlog} = useBlogStore();
+    const { blogs, fetchBlogs, deleteBlog, createBlog, updateBlog, fetchBlogById} = useBlogStore();
 
     console.log(blogs,"===bog")
     const token =localStorage.getItem('token'); 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false); 
     const [currentBlog, setCurrentBlog] = useState(null);
+    const [selectedBlog, setSelectedBlog] = useState(null); // For viewing blog details
 
 
     useEffect(() => {
@@ -62,6 +63,10 @@ function Blogmodule() {
         setCurrentBlog(blog);
         setIsEditModalOpen(true);
     };
+    const onView = (blog) => {
+        setSelectedBlog(blog); // Set the selected blog
+        
+    };
     return (
         <>
             <div className="bg-slate-300 overflow-hidden">
@@ -100,6 +105,7 @@ function Blogmodule() {
                                     image={blog.thumbnail}
                                     onDelete={() => handleDelete(blog._id)}
                                     onEdit={() => openEditModal(blog)} 
+                                    onView={() => onView(blog)} 
                                 />
                             ))}
                         </div>
