@@ -25,10 +25,10 @@ const BlogCard = ({ title, author, date, desc, image, onView, onEdit, onDelete }
   return (
     <>
     
-    <div className="w-[25%] max-sm:w-[85%] mx-8 my-5 h-auto bg-slate-100   rounded-lg overflow-hidden  transition-transform duration-500 hover:scale-105">
+    <div className="w-[25%] h-[550px] max-sm:w-[85%] mx-8 my-5 h-auto bg-slate-100   rounded-lg overflow-hidden  transition-transform duration-500 hover:scale-105">
       {image ? (
       
-        <div className="relative h-[55%] w-full">
+        <div className="relative h-[50%] w-full">
           
           <img src={image} alt={title} className="h-[100%] w-full object-cover " />
           <button onClick={toggleMenu} className="absolute top-2 right-2 bg-white p-1 rounded-full shadow">
@@ -47,9 +47,9 @@ const BlogCard = ({ title, author, date, desc, image, onView, onEdit, onDelete }
       ) : (
         <div className="placeholder-image">No Image Available</div>
       )}
-      <div className="mt-5 space-y-2">
-        <h3 className='text-[28px] text-center font-bold text-amber-600'>{title}</h3>
-        <span className='flex justify-between text-black font-bold p-2 uppercase'>
+      <div className="mt-5 space-y-1">
+        <h3 className='text-[28px] text-left font-bold p-2 text-amber-600'>{title}</h3>
+        <span className='flex justify-between text-black font-bold px-2 uppercase'>
           <p>By {author}</p>
           <p>{date}</p>
         </span>
