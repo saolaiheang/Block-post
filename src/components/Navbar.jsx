@@ -43,11 +43,14 @@ function Navbar() {
 
   return (
     <>
-      <div className="bg-blue-800">
-        <div className="justify-between w-[80%] mx-auto items-center flex h-[100px]">
-          <div className="items-center flex">
-            <h1 className="text-[30px] font-serif font-bold text-white">BugBlaster</h1>
+
+      <div className="bg-white mt-5">
+        <div className="justify-between w-[85%] mx-auto items-center flex h-[100px] ">
+          <div className="items-center flex ">
+           <Link to="/blogmodule"> <h1 className="text-[35px] font-serif font-bold text-blue-500">BugBlaster</h1></Link>
+
           </div>
+
           <div className="flex-row flex space-x-10 items-center">
             <Link to="/user">
               {profileImage ? (
@@ -59,6 +62,7 @@ function Navbar() {
               ) : (
                 <CgProfile size={40} color="white" />
               )}
+
             </Link>
             <button onClick={handleLogout} className="focus:outline-none">
               <IoLogOutOutline size={40} color="red" />
