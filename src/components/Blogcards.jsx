@@ -20,7 +20,7 @@ const BlogCard = ({ title, author, date, desc, image, onView, onEdit, onDelete }
   };
   const handleDelete = () => {
     onDelete(blogId);
-    toggleMenu(); // Close the menu after action
+    toggleMenu(); 
 };
   return (
     <>
