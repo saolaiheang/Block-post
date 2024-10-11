@@ -40,12 +40,12 @@ function UserProfile() {
 
   return (
     <div>
-      <Navbar></Navbar>
-      <div className="w-[80%] mx-auto mt-10">
-        <div className="bg-blue-400 shadow-md text-[20px] rounded-lg p-6 mt-5">
-          <h2 className="text-[30px] font-bold mb-4 text-center">View Profile</h2>
+      <Navbar />
+      <div className="w-full sm:w-[90%] md:w-[80%] mx-auto mt-10">
+        <div className="bg-blue-400 shadow-md text-base sm:text-lg md:text-xl rounded-lg p-6 mt-5">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-center">View Profile</h2>
           <div className="flex justify-center">
-            <ImgProfile></ImgProfile>
+            <ImgProfile />
           </div>
           <div className="text-center">
             <p className="text-black">
@@ -59,7 +59,6 @@ function UserProfile() {
             </p>
           </div>
         </div>
-
       </div>
     </div>
   );

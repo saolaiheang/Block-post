@@ -51,22 +51,22 @@ function Login() {
   
   return (
     <div>
-      <div className="bg-slate-300 h-[100vh]">
-        <div className="justify-between mx-auto flex h-[80vh] w-[70%] max-sm:flex-col max-md:flex-row">
-          <div className="w-full max-sm:mt-10 justify-center flex flex-col space-y-10">
+      <div className="bg-slate-300 h-[100vh] max-sm:h-[110vh]">
+        <div className="justify-between mx-auto flex h-[80vh] w-[70%]  l max-sm:flex-col max-md:flex-row">
+          <div className="w-full max-sm:mt-10 justify-center max-sm:flex-col flex flex-col space-y-10">
             <h1 className="text-[40px] font-bold">Welcome!</h1>
-            <p className="text-[25px]">
+            <p className="text-[25px] w-[60%] max-sm:w-[100%]">
               Already have an account?
-              <br />
+              
               Log in with your credentials.
             </p>
-            <Link to="/signup" className="bg-blue-700 font-bold text-white h-[5vh] w-[22%] max-sm:text-[12px] items-center flex justify-center">
+            <Link to="/signup" className="bg-blue-700 font-bold text-white h-[5vh] w-[22%] max-sm:h-[6vh] max-sm:w-[32%]  max-sm:text-[15px] items-center flex justify-center">
               Go to Sign Up
             </Link>
           </div>
 
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="bg-slate-400 mt-10 h-[50vh] max-sm:w-[100%] w-[70%] flex flex-col items-center justify-center mx-auto bg-opacity-25 space-y-4 p-4">
+          <div className="w-full h-full flex items-center max-sm:flex-col justify-center">
+            <div className="bg-slate-400 mt-10 h-[50vh] max-sm:w-[100%] w-[70%] max-sm:flex-col flex flex-col items-center justify-center mx-auto bg-opacity-25 space-y-4 p-4">
               <h1 className="text-[30px] text-center font-bold w-full">Log In</h1>
 
               <label className="w-[70%] max-sm:w-[100%] max-sm:text-[15px] text-[20px]">Email</label>

@@ -56,22 +56,22 @@ function SignUp() {
 
 
   return (
-    <div className="bg-slate-300 h-[100vh]">
-      <div className="justify-between mx-auto flex h-[80vh] w-[70%]">
+    <div className="bg-slate-300 h-[100vh] max-sm:h-[140vh] max-sm:flex-col">
+      <div className="justify-between mx-auto  flex  max-sm:flex-col h-[80vh] w-[70%]">
         <div className="w-full justify-center flex flex-col space-y-10">
           <h1 className="text-[40px] font-bold">Welcome!</h1>
-          <p className="text-[25px]">
+          <p className="text-[25px]  w-[60%] max-sm:w-[100%]">
             Don't have an account? Create one now!
-            <br />
+          
             Fill in your details below.
           </p>
-          <Link to="/" className="bg-blue-700 text-white font-bold h-[5vh] items-center flex justify-center w-[20%]">
+          <Link to="/" className="bg-blue-700 font-bold text-white h-[5vh] w-[22%] max-sm:h-[6vh] max-sm:w-[32%]  max-sm:text-[15px] items-center flex justify-center">
             Go to Log in
           </Link>
         </div>
 
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="bg-slate-400 h-[70vh] w-[70%] flex flex-col items-center justify-center mx-auto bg-opacity-25 space-y-4 p-4">
+        <div className="w-full h-full flex items-center justify-center max-sm:mt-10">
+          <div className="bg-slate-400 h-[70vh] max-sm:w-[100%] max-sm:h-[80vh] w-[70%] flex flex-col items-center justify-center mx-auto bg-opacity-25 space-y-4 p-4">
             <h1 className="text-[30px] text-center font-bold w-full">Sign Up</h1>
 
             <label className="w-[70%] text-[20px]">First Name</label>
