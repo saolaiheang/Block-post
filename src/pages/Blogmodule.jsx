@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import BlogCard from '../components/Blogcards';
 import { useBlogStore } from '../components/Store';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -12,17 +12,18 @@ import Navbar from '../components/Navbar';
 import Createformnew from '../components/Createformnew';
 import Updateblog from '../components/Updateblog';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 
 function Blogmodule() {
-    const { blogs, fetchBlogs, deleteBlog, createBlog, updateBlog, fetchBlogById} = useBlogStore();
+    const { blogs, fetchBlogs, deleteBlog, createBlog, updateBlog, fetchBlogById } = useBlogStore();
 
-    console.log(blogs,"===bog")
-    const token =localStorage.getItem('token'); 
+    console.log(blogs, "===bog")
+    const token = localStorage.getItem('token');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false); 
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [currentBlog, setCurrentBlog] = useState(null);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -39,7 +40,7 @@ function Blogmodule() {
     const handleCreateBlog = async (blogData) => {
         try {
             await createBlog(blogData);
-            fetchBlogs(); 
+            fetchBlogs();
         } catch (error) {
             console.error('Error creating blog:', error);
         }
@@ -48,7 +49,7 @@ function Blogmodule() {
     const handleDelete = async (blogId) => {
         try {
             await deleteBlog(blogId, token);
-            fetchBlogs(); 
+            fetchBlogs();
         } catch (error) {
             console.error('Error deleting blog:', error);
         }
@@ -56,8 +57,8 @@ function Blogmodule() {
 
     const handleUpdate = async (blogId, updatedData) => {
         try {
-            await updateBlog(blogId, updatedData, token); 
-            await fetchBlogs(); 
+            await updateBlog(blogId, updatedData, token);
+            await fetchBlogs();
         } catch (error) {
             console.error('Error updating blog:', error);
         }
@@ -69,13 +70,15 @@ function Blogmodule() {
     const onView = (blog) => {
         navigate(`/blog/${blog._id}`);
     };
-    
+
     return (
         <>
             <div className="bg-slate-300 overflow-hidden">
+                <div className='w-full h-5 bg-slate-500'></div>
+
                 <Navbar></Navbar>
                 <div className="sliderimage">
-                    <div className='mt-10'>
+                    <div className=''>
                         <Swiper
                             modules={[Navigation, Pagination]}
                             spaceBetween={60}
@@ -107,28 +110,31 @@ function Blogmodule() {
                                     date={new Date(blog.createdAt).toLocaleDateString()}
                                     desc={blog.desc}
                                     image={blog.thumbnail}
+                                    avatar={blog.createdBy.avatar}
                                     onDelete={() => handleDelete(blog._id)}
-                                    onEdit={() => openEditModal(blog)} 
-                                    onView={() => onView(blog)} 
+                                    onEdit={() => openEditModal(blog)}
+                                    onView={() => onView(blog)}
                                 />
                             ))}
                         </div>
                     ) : (
-                        <p>No blogs available.</p>
+                        <p>loading.....</p>
                     )}
                 </div>
                 <Btn name="Create New Blog" onClick={() => setIsModalOpen(true)} />
                 <Createformnew
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
-                    onCreate={handleCreateBlog} 
+                    onCreate={handleCreateBlog}
                 />
-                   <Updateblog
-                isOpen={isEditModalOpen}
-                onClose={() => setIsEditModalOpen(false)}
-                blogData={currentBlog}
-                onUpdate={handleUpdate} 
-            />
+                <Updateblog
+                    isOpen={isEditModalOpen}
+                    onClose={() => setIsEditModalOpen(false)}
+                    blogData={currentBlog}
+                    onUpdate={handleUpdate}
+                />
+
+                <Footer/>
             </div>
         </>
     );
