@@ -1,4 +1,5 @@
 
+
 import React, { useEffect, useState } from 'react';
 import BlogCard from '../components/Blogcards';
 import { useBlogStore } from '../components/Store';
@@ -13,21 +14,21 @@ import Createformnew from '../components/Createformnew';
 import Updateblog from '../components/Updateblog';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
-
+import axios from 'axios';
 
 function Blogmodule() {
-    const { blogs, fetchBlogs, deleteBlog, createBlog, updateBlog, fetchBlogById } = useBlogStore();
-
-    console.log(blogs, "===bog")
-    const token = localStorage.getItem('token');
+    const { blogs, fetchBlogs, deleteBlog, createBlog, updateBlog } = useBlogStore();
+    const [publicBlogs, setPublicBlogs] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [currentBlog, setCurrentBlog] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1); 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [publicPage, setPublicPage] = useState(1);  // Pagination for public blogs
     const itemsPerPage = 4;
+    const publicItemsPerPage = 4; // Public blogs per page
     const navigate = useNavigate();
 
-
+    const token = localStorage.getItem('token');
     useEffect(() => {
         const getBlogs = async () => {
             try {
@@ -38,6 +39,19 @@ function Blogmodule() {
         };
         getBlogs();
     }, [fetchBlogs]);
+
+    useEffect(() => {
+        const fetchPublicBlogs = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/blog/get-all-blog-public`);
+                setPublicBlogs(response.data.blogs);
+            } catch (error) {
+                console.error('Error fetching public blogs:', error);
+                alert('Failed to load public blogs. Please try again.');
+            }
+        };
+        fetchPublicBlogs();
+    }, []);
 
     const handleCreateBlog = async (blogData) => {
         try {
@@ -65,51 +79,67 @@ function Blogmodule() {
             console.error('Error updating blog:', error);
         }
     };
+
     const openEditModal = (blog) => {
         setCurrentBlog(blog);
         setIsEditModalOpen(true);
     };
+
     const onView = (blog) => {
         navigate(`/blog/${blog._id}`);
     };
+
     const totalPages = Math.ceil(blogs.length / itemsPerPage);
     const currentBlogs = blogs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
+    const publicTotalPages = Math.ceil(publicBlogs.length / publicItemsPerPage); 
+    const currentPublicBlogs = publicBlogs.slice((publicPage - 1) * publicItemsPerPage, publicPage * publicItemsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
+
+    const handleNextPublicPage = () => {
+        if (publicPage < publicTotalPages) setPublicPage(publicPage + 1);
+    };
+
+    const handlePreviousPublicPage = () => {
+        if (publicPage > 1) setPublicPage(publicPage - 1);
+    };
+
     return (
         <>
             <div className="bg-slate-300 overflow-hidden">
-                <div className='w-full h-5 bg-slate-500'></div>
+                <Navbar />
 
-                <Navbar></Navbar>
                 <div className="sliderimage">
-                    <div className=''>
-                        <Swiper
-                            modules={[Navigation, Pagination]}
-                            spaceBetween={60}
-                            slidesPerView={1}
-                            navigation
-                            pagination={{ clickable: true }}
-                        >
-                            {blogs.map((blog) => (
-                                <SwiperSlide key={blog._id}>
-                                    <div
-                                        className='w-full h-[700px] bg-cover bg-center object-cover'
-                                        style={{ backgroundImage: `url(${blog.thumbnail})` }}
-                                    ></div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
+                    <Swiper
+                        modules={[Navigation, Pagination]}
+                        spaceBetween={60}
+                        slidesPerView={1}
+                        navigation
+                        pagination={{ clickable: true }}
+                    >
+                        {blogs.map((blog) => (
+                            <SwiperSlide key={blog._id}>
+                                <div
+                                    className="w-full h-[700px] bg-cover bg-center object-cover"
+                                    style={{ backgroundImage: `url(${blog.thumbnail})` }}
+                                ></div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
-                <h1 className='text-center text-blue-600 text-xl mt-10 font-bold'>Welcome to Your Blogs</h1>
 
-                <div className='w-full mt-10'>
+                <h1 className="text-center text-blue-600 text-xl mt-10 font-bold">Your Blogs</h1>
+                <div className="w-full mt-10">
                     {blogs && blogs.length > 0 ? (
                         <div className="w-full flex flex-wrap lg:flex-row md:flex-col max-sm:flex-col lg:justify-center md:justify-center max-sm:justify-center">
-                            {currentBlogs.slice(0, 10).map((blog) => (
+                            {currentBlogs.map((blog) => (
                                 <BlogCard
                                     key={blog._id}
                                     title={blog.title}
@@ -125,28 +155,73 @@ function Blogmodule() {
                             ))}
                         </div>
                     ) : (
-                        <p>loading.....</p>
+                        <p>Loading your blogs...</p>
                     )}
                 </div>
-                <div className="flex justify-end mt-5">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index + 1}
-                            className={`mx-1 px-3 py-1 border rounded ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'bg-white text-blue-600'}`}
-                            onClick={() => handlePageChange(index + 1)}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
+                <div className="flex justify-between mt-5 px-10">
+                    <button
+                        onClick={handlePreviousPage}
+                        className={`mx-1 px-3 py-1 border rounded ${currentPage === 1 ? 'bg-gray-400 text-white' : 'bg-white text-blue-600'}`}
+                        disabled={currentPage === 1}
+                    >
+                        Previous
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        className={`mx-1 px-3 py-1 border rounded ${currentPage === totalPages ? 'bg-gray-400 text-white' : 'bg-white text-blue-600'}`}
+                        disabled={currentPage === totalPages}
+                    >
+                        Next
+                    </button>
                 </div>
+
+                <h1 className="text-center text-blue-600 text-xl mt-10 font-bold">Public Blogs</h1>
+                <div className="w-full mt-10">
+                    {publicBlogs && publicBlogs.length > 0 ? (
+                        <div className="w-full flex flex-wrap lg:flex-row md:flex-col max-sm:flex-col lg:justify-center md:justify-center max-sm:justify-center">
+                            {currentPublicBlogs.map((blog) => (
+                                <BlogCard
+                                    key={blog._id}
+                                    title={blog.title}
+                                    author={`${blog.createdBy.firstName} ${blog.createdBy.lastName}`}
+                                    date={new Date(blog.createdAt).toLocaleDateString()}
+                                    desc={blog.desc}
+                                    image={blog.thumbnail}
+                                    avatar={blog.createdBy.avatar}
+                                    onView={() => onView(blog)}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No public blogs available.</p>
+                    )}
+                </div>
+
+                <div className="flex justify-between mt-5 px-10">
+                    <button
+                        onClick={handlePreviousPublicPage}
+                        className={`mx-1 px-3 py-1 border rounded ${publicPage === 1 ? 'bg-gray-400 text-white' : 'bg-white text-blue-600'}`}
+                        disabled={publicPage === 1}
+                    >
+                        Previous
+                    </button>
+                    <button
+                        onClick={handleNextPublicPage}
+                        className={`mx-1 px-3 py-1 border rounded ${publicPage === publicTotalPages ? 'bg-gray-400 text-white' : 'bg-white text-blue-600'}`}
+                        disabled={publicPage === publicTotalPages}
+                    >
+                        Next
+                    </button>
+                </div>
+
                 <Btn name="Create New Blog" onClick={() => setIsModalOpen(true)} />
-                    <h1 className='text-center text-blue-500 font-bold'>Public Blogs</h1>
 
                 <Createformnew
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
                     onCreate={handleCreateBlog}
                 />
+
                 <Updateblog
                     isOpen={isEditModalOpen}
                     onClose={() => setIsEditModalOpen(false)}
@@ -154,11 +229,10 @@ function Blogmodule() {
                     onUpdate={handleUpdate}
                 />
 
-                <Footer/>
+                <Footer />
             </div>
         </>
     );
 }
 
 export default Blogmodule;
-
