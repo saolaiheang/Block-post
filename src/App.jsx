@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Blogmodule from './pages/Blogmodule';
 import NotFound from './components/Notfound';
-// import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 import './index.css';
 import Login from './pages/Login';
 import SignUp from './pages/Register';
