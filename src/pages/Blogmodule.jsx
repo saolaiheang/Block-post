@@ -23,6 +23,8 @@ function Blogmodule() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [currentBlog, setCurrentBlog] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1); 
+    const itemsPerPage = 4;
     const navigate = useNavigate();
 
 
@@ -70,7 +72,12 @@ function Blogmodule() {
     const onView = (blog) => {
         navigate(`/blog/${blog._id}`);
     };
+    const totalPages = Math.ceil(blogs.length / itemsPerPage);
+    const currentBlogs = blogs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
     return (
         <>
             <div className="bg-slate-300 overflow-hidden">
@@ -102,7 +109,7 @@ function Blogmodule() {
                 <div className='w-full mt-10'>
                     {blogs && blogs.length > 0 ? (
                         <div className="w-full flex flex-wrap lg:flex-row md:flex-col max-sm:flex-col lg:justify-center md:justify-center max-sm:justify-center">
-                            {blogs.slice(0, 10).map((blog) => (
+                            {currentBlogs.slice(0, 10).map((blog) => (
                                 <BlogCard
                                     key={blog._id}
                                     title={blog.title}
@@ -121,7 +128,20 @@ function Blogmodule() {
                         <p>loading.....</p>
                     )}
                 </div>
+                <div className="flex justify-end mt-5">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index + 1}
+                            className={`mx-1 px-3 py-1 border rounded ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'bg-white text-blue-600'}`}
+                            onClick={() => handlePageChange(index + 1)}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                </div>
                 <Btn name="Create New Blog" onClick={() => setIsModalOpen(true)} />
+                    <h1 className='text-center text-blue-500 font-bold'>Public Blogs</h1>
+
                 <Createformnew
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
