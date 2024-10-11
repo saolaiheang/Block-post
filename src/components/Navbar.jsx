@@ -60,7 +60,7 @@ function Navbar() {
                   className="h-10 w-10 rounded-full object-cover cursor-pointer"
                 />
               ) : (
-                <CgProfile size={40} color="white" />
+                <CgProfile size={40} color="blue" />
               )}
 
             </Link>
