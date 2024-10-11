@@ -8,9 +8,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
+import Navbar from '../components/Navbar';
 import Createformnew from '../components/Createformnew';
 import Updateblog from '../components/Updateblog';
 import { useNavigate } from 'react-router-dom';
+
 
 function Blogmodule() {
     const { blogs, fetchBlogs, deleteBlog, createBlog, updateBlog, fetchBlogById} = useBlogStore();
@@ -71,6 +73,7 @@ function Blogmodule() {
     return (
         <>
             <div className="bg-slate-300 overflow-hidden">
+                <Navbar></Navbar>
                 <div className="sliderimage">
                     <div className='mt-10'>
                         <Swiper
