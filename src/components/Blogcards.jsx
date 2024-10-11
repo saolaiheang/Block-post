@@ -20,7 +20,7 @@ const BlogCard = ({ title, author,avatar, date, desc, image, onView, onEdit, onD
   };
 
   return (
-    <div className="w-[23%] h-[500px] drop-shadow-2xl max-sm:w-[85%] mx-8 my-5 h-auto bg-slate-100 rounded-lg overflow-hidden transition-transform duration-500 hover:scale-105">
+    <div className="w-[20%] h-[500px] drop-shadow-2xl max-sm:w-[85%] mx-8 my-5 h-auto bg-slate-100 rounded-lg overflow-hidden transition-transform duration-500 hover:scale-105">
       {image ? (
         <div className="relative h-[50%] w-full">
           <img src={image} alt={title} className="h-[100%] w-full object-cover" />
@@ -46,7 +46,7 @@ const BlogCard = ({ title, author,avatar, date, desc, image, onView, onEdit, onD
       )}
       <div className="mt-5 space-y-1">
         <span className='flex justify-between'>
-        <h3 className='text-[20px] text-left font-bold p-2 text-amber-600 hover:text-amber-700 transition-colors'>{title}</h3>
+        <h3 className='text-[20px] text-left font-bold p-2 uppercase text-amber-600 hover:text-amber-700 transition-colors'>{title}</h3>
         <img
           src={avatar}  
           alt={`${author}'s avatar`}

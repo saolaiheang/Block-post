@@ -16,10 +16,10 @@ export const useBlogStore = create((set) => ({
   loading: false,
   error: null,
 
-  fetchBlogs: async () => {
+  fetchBlogs: async (page, limit) => {
     set({ loading: true, error: null });
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/blog/get-all-blogs`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/blog/get-all-blogs?page=${page}&limit=${limit}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${useBlogStore.getState().token}`,
