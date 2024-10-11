@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
+
 function UserProfile() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -127,6 +128,7 @@ function UserProfile() {
               Update Profile
             </button>
           </form>
+          
         </div>
       </div>
     </div>
