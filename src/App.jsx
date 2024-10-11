@@ -6,6 +6,7 @@ import NotFound from './components/Notfound';
 import './index.css';
 import Login from './pages/Login';
 import SignUp from './pages/Register';
+import BlogDetail from './pages/Detailpage';
 import UserProfile from './pages/UserAccount';
 function App() {
   return (
@@ -19,8 +20,12 @@ function App() {
             <PrivateRoute>
               <Blogmodule />
             </PrivateRoute>
+            
           }
+          
         />
+         <Route path="/blog/:id" element={<BlogDetail />} /> 
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

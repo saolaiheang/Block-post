@@ -1,37 +1,35 @@
-import React,{useState} from 'react';
+
+import React, { useState } from 'react';
 import { IoMenu } from "react-icons/io5";
 import { Link } from 'react-router-dom';
-const BlogCard = ({ title, author, date, desc, image, onView, onEdit, onDelete }) => {
+
+const BlogCard = ({ id, title, author, date, desc, image, onView, onEdit, onDelete }) => {
   const truncateDesc = (text, limit) => {
-    if (text.length > limit) {
-      return text.substring(0, limit) + '...';
-    }
-    return text;
+    return text.length > limit ? text.substring(0, limit) + '...' : text;
   };
+
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => {
-      setMenuOpen((prev) => !prev);
+    setMenuOpen(prev => !prev);
   };
+
   const handleMenuClick = (action) => {
-      toggleMenu();
-      if (action === 'view') onView();
-      if (action === 'edit') onEdit();
-      if (action === 'delete') onDelete();
+    toggleMenu();
+    if (action === 'view') onView();
+    if (action === 'edit') onEdit();
+    if (action === 'delete') onDelete();
   };
-  const handleDelete = () => {
-    onDelete(blogId);
-    toggleMenu(); 
-};
+
   return (
-    <>
-    
-    <div className="w-[25%] h-[550px] max-sm:w-[85%] mx-8 my-5 h-auto bg-slate-100   rounded-lg overflow-hidden  transition-transform duration-500 hover:scale-105">
+    <div className="w-[25%] h-[550px] max-sm:w-[85%] mx-8 my-5 h-auto bg-slate-100 rounded-lg overflow-hidden transition-transform duration-500 hover:scale-105">
       {image ? (
-      
         <div className="relative h-[50%] w-full">
-          
-          <img src={image} alt={title} className="h-[100%] w-full object-cover " />
-          <button onClick={toggleMenu} className="absolute top-2 right-2 bg-white p-1 rounded-full shadow">
+          <img src={image} alt={title} className="h-[100%] w-full object-cover" />
+          <button 
+            onClick={toggleMenu} 
+            className="absolute top-2 right-2 bg-white p-1 rounded-full shadow" 
+            aria-label="Menu"
+          >
             <IoMenu />
           </button>
           {menuOpen && (
@@ -45,22 +43,18 @@ const BlogCard = ({ title, author, date, desc, image, onView, onEdit, onDelete }
           )}
         </div>
       ) : (
-        <div className="placeholder-image">No Image Available</div>
+        <div className="h-[50%] w-full bg-gray-300 flex items-center justify-center text-gray-600">No Image Available</div>
       )}
       <div className="mt-5 space-y-1">
-        <h3 className='text-[28px] text-left font-bold p-2 text-amber-600'>{title}</h3>
+        <h3 className='text-[28px] text-left font-bold p-2 text-amber-600 hover:text-amber-700 transition-colors'>{title}</h3>
         <span className='flex justify-between text-black font-bold px-2 uppercase'>
           <p>By {author}</p>
           <p>{date}</p>
         </span>
-        <p className='text-[18px] p-2'>{truncateDesc(desc, 120)} </p>
-        
-        <Link to="" className='text-blue-600 p-2'>Read More</Link>
-        
-        
+        <p className='text-[18px] p-2'>{truncateDesc(desc, 120)}</p>
+        <p onClick={() => handleMenuClick('view')} className='text-blue-600 p-2 hover:underline'>Read More</p>
       </div>
     </div>
-    </>
   );
 };
 

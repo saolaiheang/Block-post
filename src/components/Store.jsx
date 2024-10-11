@@ -123,5 +123,29 @@ export const useBlogStore = create((set) => ({
   },
 
 
+  fetchBlogById: async (blogId, token) => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/blog/get-blog/${blogId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+
+        },
+      });
+  
+      if (response.status === 200) {
+        set({ selectedBlog: response.data });
+        console.log('Fetched blog successfully:', response.data);
+      } else {
+        console.error('Failed to fetch blog');
+      }
+    } catch (error) {
+      console.error('Error fetching blog:', error);
+    }
+  },
+  
+
+
+
 }));
 
