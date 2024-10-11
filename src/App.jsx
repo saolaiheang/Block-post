@@ -7,18 +7,20 @@ import './index.css';
 import Login from './pages/Login';
 import SignUp from './pages/Register';
 import UserProfile from './pages/UserAccount';
-
-
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+    <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/user" element={<UserProfile />} />
-     
-        <Route path="/blogmodule" element={<Blogmodule />} />
+          <Route path="/user" element={<UserProfile />} />
+        <Route path="/blogmodule" element={
+            <PrivateRoute>
+              <Blogmodule />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

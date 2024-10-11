@@ -43,6 +43,7 @@ function SignUp() {
         localStorage.setItem("email", email);
  
         navigate("/blogmodule");
+
       } else {
         alert("Sign up failed: " + data.message);
         console.error("Sign up failed", data);
